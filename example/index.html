@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <style>
+     @import url(kanban.min.css);
+   </style>
+   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script type="text/javascript" src="kanban.min.js"></script>
+   <title>Kanban JS Example</title>
+   <script>
+     var nw = new Workspace();
+     window.onload=function(){
+       nw.init();
+       nw.add_column('To Do',nw.get_name());
+       nw.add_column('En Proceso',nw.get_name());
+     };
+     $(document).ready(function(){
+       $('#add_task').click(function(){
+         var prior;
+         var myCard = new Card($('#task_h').val(),$('#task_txt').val(),nw.card_counter,nw.get_name());
+         switch ($('#task_prior').val()){
+          case 'LOW': prior=myCard.LOW; break;
+          case 'MID': prior=myCard.MID; break;
+          case 'HIGH': prior=myCard.HIGH; break;
+         }
+         myCard.stPrior=prior;
+         nw.add_card_to_column('To Do',myCard);
+         $('#task_h').val('');
+         $('#task_txt').val('');
+         $('#task_prior').val('LOW'); 
+       });
+        $('#add_column').click(function(){
+          nw.add_column($('#column_h').val(),nw.get_name());
+        });
+     });
+   </script>
+ </head>
+ <body>
+   <div id="toolbar">
+      <input type="text" id="task_h" name="task_h" placeholder="T&iacute;tulo" />
+      <input type="text" id="task_txt" name="task_txt" placeholder="Tarea" />
+     <label>Prioridad: </label>
+      <select id="task_prior" name="task_prior">
+        <option value="LOW">Normal</option> 
+        <option value="MID">Media</option> 
+        <option value="HIGH">Alta</option> 
+      </select>
+      <i id="add_task" name="add_task" class="fa fa-plus fa-2x fa-border"></i>
+      <input type="text" id="column_h" name="column_h" placeholder="Nombre Columna" />
+      <i id="add_column" name="add_column" class="fa fa-plus fa-2x fa-border"></i>
+   </div> 
+ </body>
+</html>
