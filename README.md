@@ -6,6 +6,13 @@ A javascript library for a simple html5 kanban board.
 Usage
 =========
 
+Add this to your HTML document
+```
+<link href="kanban.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="kanban.js"></script>
+```
+
+
 Without jQuery:
 ```
 <script>
