@@ -8,6 +8,9 @@ Usage
 
 Add this to your HTML document
 ```
+<!-- It use Font Awesome for some icons -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
 <link href="kanban.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="kanban.js"></script>
 ```
@@ -60,3 +63,6 @@ With jQuery:
      
 </script>
 ```
+
+I'm using Font Awesome for some icons, so if you want to use it check this url: 
+http://fortawesome.github.io/Font-Awesome/
