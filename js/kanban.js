@@ -16,17 +16,17 @@ function Workspace(){
   this.add_column=function(stName,stWorkspace){
    var workspace = document.getElementById('workspace');
    var newColumn = document.createElement('div');
-   newColumn.setAttribute('id',stName);
-   newColumn.setAttribute('name',stName);
+   newColumn.setAttribute('id',stName.replace(/[^a-z0-9]/gi,"_"));
+   newColumn.setAttribute('name',stName.replace(/[^a-z0-9]/gi,"_"));
    newColumn.setAttribute('class','k_columns');
    newColumn.setAttribute('ondrop',stWorkspace+'.drop(event)');
    newColumn.setAttribute('ondragover',stWorkspace+'.allowDrop(event)');
-   newColumn.innerHTML='<h2>'+stName+'</h2>';
+   newColumn.innerHTML='<h2 class="column_header">'+stName+'</h2>';
    workspace.appendChild(newColumn);
-   this.columns.push(stName);
+   this.columns.push(stName.replace(/[^a-z0-9]/gi,"_"));
   };
   this.add_card_to_column=function(stColumnName,newCard){
-    var column = document.getElementById(stColumnName);
+    var column = document.getElementById(stColumnName.replace(/[^a-z0-9]/gi,"_"));
     //this.cards_number.push(this.card_counter);
     column.appendChild(newCard.get_card());
     this.card_counter++;
@@ -40,14 +40,17 @@ function Workspace(){
   this.drop=function (ev){
     ev.preventDefault();
     var data=ev.dataTransfer.getData("Text");
-    ev.target.appendChild(document.getElementById(data));
+    if (this.columns.indexOf(ev.target.id)>=0)
+      ev.target.appendChild(document.getElementById(data));
+    else
+      return false;
   };
   this.remove_card=function(iCardNum){
     for(var i=0;i<=this.columns.length;i++){
        var d = document.getElementById(this.columns[i]);
        var card = document.getElementById(iCardNum);
        try{
-         console.log('remove '+iCardNum);
+         //console.log('remove '+iCardNum);
          d.removeChild(card);
        }catch(e){
          console.log(e.message);
@@ -57,7 +60,7 @@ function Workspace(){
   };
 }
 Workspace.prototype.global = this;
-function Card(stTitle,stContent,iCardNum,stWorkspace){
+function Card(stTitle,stContent,iCardNum,stDate,stWorkspace){
   this.stTitle=stTitle;
   this.stContent=stContent;
   this.iCardNUm=iCardNum;
@@ -73,9 +76,8 @@ function Card(stTitle,stContent,iCardNum,stWorkspace){
     newCard.setAttribute('class',this.stPrior);
     newCard.setAttribute('draggable','true');
     newCard.setAttribute('ondragstart',stWorkspace+'.drag(event)');
-    newCard.setAttribute('style','z-index:'+this.z_index+';top:'+this.top+'px;left:'+this.left+'px;');
-    newCard.innerHTML = '<div>'+stTitle+' #'+iCardNum+'.  <a href=\'#\'  onclick=\''+stWorkspace+'.remove_card("'+cardIdName+'")\'>'
-    +'<i class="fa fa-trash-o"></i></a></div><br>'+stContent;
+    //newCard.setAttribute('style','z-index:'+this.z_index+';top:'+this.top+'px;left:'+this.left+'px;');
+    newCard.innerHTML = '<div class="c_header">'+stTitle.toUpperCase()+' '+stDate+'&nbsp&nbsp  <a href=\'#\' onclick=\''+stWorkspace+'.remove_card("'+cardIdName+'")\'> x </a> </div><br>'+stContent;
     return newCard;
   };
   this.destroy=function(stColumnName,iCardNum){
@@ -88,4 +90,3 @@ function Card(stTitle,stContent,iCardNum,stWorkspace){
     }
   };
 }
-

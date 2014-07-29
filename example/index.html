@@ -18,7 +18,7 @@
      $(document).ready(function(){
        $('#add_task').click(function(){
          var prior;
-         var myCard = new Card($('#task_h').val(),$('#task_txt').val(),nw.card_counter,nw.get_name());
+         var myCard = new Card($('#task_h').val(),$('#task_txt').val(),nw.card_counter,'',nw.get_name());
          switch ($('#task_prior').val()){
           case 'LOW': prior=myCard.LOW; break;
           case 'MID': prior=myCard.MID; break;

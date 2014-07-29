@@ -53,13 +53,15 @@ body{
 }
 
 .k_columns{
-  width:19%;
-  height:100%;
+ width:24%;
+  min-height:60%;
+  max-height:80%;
   background-color:#e8e8e8;
   margin-top:5px;
   margin-left:5px;
-  display:inline;
   float:left;
+  overflow-y:scroll;
+  box-shadow:2px 2px 3px #555;
 }
 
 .card{
